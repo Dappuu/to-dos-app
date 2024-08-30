@@ -1,8 +1,10 @@
 from fastapi import FastAPI
 
+from app.routers import auth as AuthRouter
 
 app = FastAPI()
 
+app.include_router(AuthRouter.router)
 
 
 @app.get("/", tags=["Health Check"])

@@ -1,8 +1,8 @@
 from sqlalchemy import Column, String
 from sqlalchemy.orm import relationship
 
-from database import Base
-from schemas.base_entity import BaseEntity
+from app.database import Base
+from app.schemas.base_entity import BaseEntity
 
 
 class Company(BaseEntity, Base):

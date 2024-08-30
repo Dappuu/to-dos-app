@@ -1,8 +1,8 @@
 from sqlalchemy import Boolean, Column, ForeignKey, String, UUID
 from sqlalchemy.orm import relationship
-from schemas.base_entity import BaseEntity
 
-from database import Base
+from app.schemas.base_entity import BaseEntity
+from app.database import Base
 
 
 class User(BaseEntity, Base):
