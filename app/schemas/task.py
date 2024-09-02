@@ -22,5 +22,5 @@ class Task(Base, BaseEntity):
     status = Column(Enum(STATUS), nullable=False, default=STATUS.NEW)
     priority = Column(Integer, nullable=False)
 
-    user_id = Column(Uuid, ForeignKey("user.id"), nullable=False)
+    user_id = Column(Uuid(as_uuid=True), ForeignKey("user.id"), nullable=False)
     user = relationship("User", back_populates="tasks")

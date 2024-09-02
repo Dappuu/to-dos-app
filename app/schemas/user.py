@@ -1,4 +1,4 @@
-from sqlalchemy import Boolean, Column, ForeignKey, String, UUID
+from sqlalchemy import Boolean, Column, ForeignKey, String, Uuid
 from sqlalchemy.orm import relationship
 
 from app.schemas.base_entity import BaseEntity
@@ -16,7 +16,7 @@ class User(BaseEntity, Base):
     is_active = Column(Boolean, default=True, nullable=False)
     is_admin = Column(Boolean, default=False, nullable=False)
 
-    company_id = Column(UUID, ForeignKey("company.id"), nullable=False)
+    company_id = Column(Uuid(as_uuid=True), ForeignKey("company.id"), nullable=False)
     company = relationship("Company", back_populates="users")
 
     tasks = relationship("Task", back_populates="user")

@@ -11,8 +11,8 @@ from typing import Sequence, Union
 from alembic import op
 import sqlalchemy as sa
 
-from utils import get_password_hash
-from settings import USER_PASSWORD, ADMIN_PASSWORD
+from app.utils import get_password_hash
+from app.settings import USER_PASSWORD, ADMIN_PASSWORD
 
 
 # revision identifiers, used by Alembic.
@@ -88,8 +88,8 @@ def upgrade() -> None:
                 "first_name": "User",
                 "last_name": "Last_Name",
                 "hashed_password": get_password_hash(USER_PASSWORD),
-                "is_active": False,
-                "is_admin": True,
+                "is_active": True,
+                "is_admin": False,
                 "company_id": company_id,
             },
         ],

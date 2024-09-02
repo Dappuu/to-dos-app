@@ -4,7 +4,7 @@ from fastapi import HTTPException, status
 class UnAuthorizedError(HTTPException):
     def __init__(self):
         super().__init__(
-            status_code=status.HTTP_401_UNAUTHORIZED, detail="Unauthorized access"
+            status_code=status.HTTP_401_UNAUTHORIZED, detail="Unauthorized Access"
         )
 
 
@@ -20,6 +20,14 @@ class TokenError(HTTPException):
 class InactiveError(HTTPException):
     def __init__(self):
         super().__init__(
-            status_code=status.HTTP_401_UNAUTHORIZED,
-            detail="Your account is inactive.",
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="Inactive Account",
         )
+
+class AccessDeniedError(HTTPException):
+    def __init__(self):
+        super().__init__(status_code=status.HTTP_403_FORBIDDEN, detail="Access Denied")
+        
+class ResourceNotFoundError(HTTPException):
+    def __init__(self):
+        super().__init__(status_code=status.HTTP_404_NOT_FOUND, detail="Resource Not Found")   
