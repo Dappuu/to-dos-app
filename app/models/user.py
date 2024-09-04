@@ -41,6 +41,7 @@ class CreateUserRequest(BaseModel):
         json_schema_extra={
             "example": {
                 "username": "user1",
+                "password": "password@123",
                 "email": "user1@gmail.com",
                 "first_name": "Dat",
                 "last_name": "Bui Viet",

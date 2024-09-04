@@ -1,6 +1,12 @@
 from fastapi import HTTPException, status
 
 
+class IncorrectUserError(HTTPException):
+    def __init__(self):
+        super().__init__(
+            status_code=status.HTTP_401_UNAUTHORIZED, detail="Incorrect username or password"
+        )
+        
 class UnAuthorizedError(HTTPException):
     def __init__(self):
         super().__init__(

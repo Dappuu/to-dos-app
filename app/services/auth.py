@@ -8,10 +8,11 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select
 from jose import jwt, JWTError
 
+from app.exceptions.exception import IncorrectUserError
 from app.utils import *
 from app.settings import JWT_SECRET, JWT_ALGORITHM
 from app.schemas import User
-from app.exceptions import TokenError, InactiveError, UnAuthorizedError
+from app.exceptions import TokenError, InactiveError
 
 
 async def authenticate_user(username: str, password: str, db: AsyncSession) -> User:
@@ -19,8 +20,8 @@ async def authenticate_user(username: str, password: str, db: AsyncSession) -> U
     result = await db.execute(query)
     user = result.scalar()
 
-    if not (user and verify_password(password, user.hashed_password)):
-        raise UnAuthorizedError()
+    if user is None or not verify_password(password, user.hashed_password):
+        raise IncorrectUserError()
     return user
 
 

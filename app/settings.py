@@ -6,7 +6,7 @@ import logging
 
 logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger(__name__)
-load_dotenv()
+load_dotenv(override=True)
 
 def get_env_variable(var_name):
     value = os.environ.get(var_name)

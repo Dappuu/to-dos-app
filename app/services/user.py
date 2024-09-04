@@ -54,7 +54,8 @@ async def get_User_By_Id(db: AsyncSession, user_id: UUID) -> User:
 
 async def create_User(db: AsyncSession, createRequest: CreateUserRequest) -> User:
     user_data = createRequest.model_dump()
-    user_data["password"] = get_password_hash(user_data["password"])
+    user_data["hashed_password"] = get_password_hash(user_data["password"])
+    user_data.pop("password")
     user = User(**user_data)
 
     db.add(user)

@@ -64,8 +64,7 @@ async def create_User(
     if not loggin_user.is_admin:
         raise AccessDeniedError()
 
-    password = generate_password()
-    user = await UserService.create_User(db, createRequest, password)
+    user = await UserService.create_User(db, createRequest)
     return UserViewModel.model_validate(user)
 
 
