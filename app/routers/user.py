@@ -59,9 +59,9 @@ async def get_User_By_Id(
 async def create_User(
     createRequest: CreateUserRequest,
     db: AsyncSession = Depends(get_async_db_context),
-    user: User = Depends(AuthService.token_interceptor),
+    loggin_user: User = Depends(AuthService.token_interceptor),
 ):
-    if not user.is_admin:
+    if not loggin_user.is_admin:
         raise AccessDeniedError()
 
     password = generate_password()
@@ -76,22 +76,24 @@ async def update_User(
     user_id: UUID,
     updateRequest: UpdateUserRequest,
     db: AsyncSession = Depends(get_async_db_context),
-    user: User = Depends(AuthService.token_interceptor),
+    loggin_user: User = Depends(AuthService.token_interceptor),
 ):
-    if not user.is_admin:
+    if not loggin_user.is_admin:
         raise AccessDeniedError()
 
     user = await UserService.update_User(db, user_id, updateRequest)
     return UserViewModel.model_validate(user)
 
 
-@router.delete("/{user_id}", status_code=status.HTTP_204_NO_CONTENT, response_model=None)
+@router.delete(
+    "/{user_id}", status_code=status.HTTP_204_NO_CONTENT, response_model=None
+)
 async def delete_User(
     user_id: UUID,
     db: AsyncSession = Depends(get_async_db_context),
-    user: User = Depends(AuthService.token_interceptor)
+    loggin_user: User = Depends(AuthService.token_interceptor),
 ):
-    if not user.is_admin:
+    if not loggin_user.is_admin:
         raise AccessDeniedError()
 
     await UserService.delete_User(db, user_id)

@@ -51,9 +51,11 @@ async def get_User_By_Id(db: AsyncSession, user_id: UUID) -> User:
 
     return user
 
-async def create_User(db: AsyncSession, createRequest: CreateUserRequest, password: str) -> User:
-    user = User(**createRequest.model_dump())
-    user.hashed_password = get_password_hash(password)
+
+async def create_User(db: AsyncSession, createRequest: CreateUserRequest) -> User:
+    user_data = createRequest.model_dump()
+    user_data["password"] = get_password_hash(user_data["password"])
+    user = User(**user_data)
 
     db.add(user)
     await db.commit()
@@ -61,7 +63,10 @@ async def create_User(db: AsyncSession, createRequest: CreateUserRequest, passwo
 
     return user
 
-async def update_User(db: AsyncSession, user_id: UUID, updateRequest: UpdateUserRequest) -> User:
+
+async def update_User(
+    db: AsyncSession, user_id: UUID, updateRequest: UpdateUserRequest
+) -> User:
     user = await get_User_By_Id(db, user_id)
 
     user.first_name = updateRequest.first_name
@@ -72,6 +77,7 @@ async def update_User(db: AsyncSession, user_id: UUID, updateRequest: UpdateUser
     await db.commit()
     await db.refresh(user)
     return user
+
 
 async def delete_User(db: AsyncSession, user_id: UUID):
     user = await get_User_By_Id(db, user_id)

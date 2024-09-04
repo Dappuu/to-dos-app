@@ -1,10 +1,11 @@
 from datetime import timedelta
 from typing import Optional
+from uuid import UUID
 
 from fastapi import Depends
 from fastapi.security import OAuth2PasswordBearer
 from sqlalchemy.ext.asyncio import AsyncSession
-from sqlalchemy import UUID, select
+from sqlalchemy import select
 from jose import jwt, JWTError
 
 from app.utils import *
@@ -55,9 +56,9 @@ def token_interceptor(token: str = Depends(oa2_bearer)) -> User:
         user.is_admin = payload.get("is_admin")
         user.is_active = payload.get("is_active")
 
-        if not user.username or not user.id:
+        if user.username is None or user.id is None:
             raise TokenError()
-        if not user.is_active:
+        if user.is_active is None:
             raise InactiveError()
         return user
     except JWTError:

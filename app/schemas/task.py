@@ -23,9 +23,9 @@ class Task(Base, BaseEntity):
     priority = Column(Integer, nullable=False)
 
     assigner_id = Column(Uuid(as_uuid=True), ForeignKey("user.id"), nullable=False)
-    assigner = relationship("User", foreign_keys=[assigner_id], back_populates="assigned_tasks")
-    
+    assigner = relationship(
+        "User", foreign_keys=[assigner_id], back_populates="assigned_tasks"
+    )
+
     doer_id = Column(Uuid(as_uuid=True), ForeignKey("user.id"), nullable=False)
     doer = relationship("User", foreign_keys=[doer_id], back_populates="tasks_to_do")
-    
-    

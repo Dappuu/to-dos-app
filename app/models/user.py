@@ -5,8 +5,6 @@ import uuid
 from pydantic import BaseModel, ConfigDict
 
 from app.models.spec import Specifications
-from app.models.task import TaskViewModel
-from app.schemas.task import Task
 
 
 class UserViewModel(BaseModel):
@@ -29,21 +27,30 @@ class SearchUserModel(Specifications):
     is_active: Optional[bool]
     is_admin: Optional[bool]
 
+
 class CreateUserRequest(BaseModel):
     email: str
     username: str
+    password: str
     first_name: str
     last_name: str
     company_id: UUID
     is_admin: bool
 
     model_config = ConfigDict(
-        from_attributes=True,
         json_schema_extra={
-            "example": {"username": "user1", "email": "user1@gmail.com", "first_name": "Dat", "last_name": "Bui Viet", "is_admin": True, "company_id": uuid.uuid4()}
+            "example": {
+                "username": "user1",
+                "email": "user1@gmail.com",
+                "first_name": "Dat",
+                "last_name": "Bui Viet",
+                "is_admin": True,
+                "company_id": uuid.uuid4(),
+            }
         },
     )
-    
+
+
 class UpdateUserRequest(BaseModel):
     first_name: str
     last_name: str
@@ -51,8 +58,12 @@ class UpdateUserRequest(BaseModel):
     is_active: bool
 
     model_config = ConfigDict(
-        from_attributes=True,
         json_schema_extra={
-            "example": {"first_name": "Dat", "last_name": "Bui Viet", "is_admin": True, "is_active": False}
+            "example": {
+                "first_name": "Dat",
+                "last_name": "Bui Viet",
+                "is_admin": True,
+                "is_active": False,
+            }
         },
     )

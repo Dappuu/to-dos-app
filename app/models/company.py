@@ -25,7 +25,6 @@ class CreateCompanyRequest(BaseModel):
     description: Optional[str]
 
     model_config = ConfigDict(
-        from_attributes=True,
         json_schema_extra={
             "example": {"name": "NashTech", "description": "This is a great company!"}
         },
@@ -37,7 +36,6 @@ class UpdateCompanyRequest(BaseModel):
     description: str
 
     model_config = ConfigDict(
-        from_attributes=True,
         json_schema_extra={
             "example": {"name": "Example Corp", "description": "An example company"}
         },
