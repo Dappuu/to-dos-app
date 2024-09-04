@@ -30,6 +30,7 @@ async def get_All_Users(
     page: int = Query(ge=1, default=1),
     size: int = Query(ge=1, le=50, default=10),
     db: AsyncSession = Depends(get_async_db_context),
+    _: User = Depends(AuthService.token_interceptor)
 ):
     conditions = SearchUserModel(
         user_id=user_id,
@@ -49,6 +50,7 @@ async def get_All_Users(
 async def get_User_By_Id(
     user_id: UUID,
     db: AsyncSession = Depends(get_async_db_context),
+    _: User = Depends(AuthService.token_interceptor)
 ):
     company = await UserService.get_User_By_Id(db, user_id)
 

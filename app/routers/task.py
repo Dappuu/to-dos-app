@@ -19,6 +19,7 @@ router = APIRouter(prefix="/task", tags=["Task"])
 async def get_Tasks_By_User_Id(
     user_id: UUID,
     db: AsyncSession = Depends(get_async_db_context),
+    _: User = Depends(AuthService.token_interceptor),
 ):
     tasks = await TaskService.get_Tasks_By_User_Id(db, user_id)
 
@@ -43,10 +44,8 @@ async def update_Task(
     task_id: UUID,
     updateRequest: UpdateTaskRequest,
     db: AsyncSession = Depends(get_async_db_context),
-    user: User = Depends(AuthService.token_interceptor),
+    _: User = Depends(AuthService.token_interceptor),
 ):
-    if not user.is_admin:
-        raise AccessDeniedError()
 
     task = await TaskService.update_Task(db, task_id, updateRequest)
     return TaskViewModel.model_validate(task)
@@ -58,10 +57,8 @@ async def update_Task(
 async def delete_Task(
     task_id: UUID,
     db: AsyncSession = Depends(get_async_db_context),
-    user: User = Depends(AuthService.token_interceptor),
+    _: User = Depends(AuthService.token_interceptor),
 ):
-    if not user.is_admin:
-        raise AccessDeniedError()
 
     await TaskService.delete_Task(db, task_id)
     return

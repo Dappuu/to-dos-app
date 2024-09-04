@@ -59,11 +59,11 @@ async def update_Task(
 
 
 async def delete_Task(db: AsyncSession, task_id: UUID):
-    user = await get_Task_By_Id(db, task_id)
+    task = await get_Task_By_Id(db, task_id)
 
-    if not user:
+    if not task:
         raise ResourceNotFoundError()
 
-    await db.delete(user)
+    await db.delete(task)
     await db.commit()
     return
