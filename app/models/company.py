@@ -18,13 +18,6 @@ class SearchCompanyModel(Specifications):
     company_id: Optional[str] = None
     company_name: Optional[str] = None
 
-    def __init__(self, company_id=None, company_name=None, page=1, size=12):
-        super().__init__(
-            company_id=company_id,
-            company_name=company_name,
-            page=page,
-            size=size,
-        )
 
 
 class CreateCompanyRequest(BaseModel):

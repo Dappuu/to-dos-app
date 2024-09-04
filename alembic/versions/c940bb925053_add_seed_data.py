@@ -48,7 +48,8 @@ def upgrade() -> None:
         sa.column("description", sa.String),
         sa.column("status", sa.Enum),
         sa.column("priority", sa.Integer),
-        sa.column("user_id", sa.UUID),
+        sa.column("assigner_id", sa.UUID),
+        sa.column("doer_id", sa.UUID),
     )
 
     # Insert data
@@ -105,15 +106,26 @@ def upgrade() -> None:
                 "description": "This is the first task",
                 "status": "NEW",
                 "priority": 1,
-                "user_id": admin_id,
+                "assigner_id": admin_id,
+                "doer_id": admin_id,
             },
             {
                 "id": uuid.uuid4(),
-                "summary": "User task",
+                "summary": "Admin -> User",
                 "description": "This is the first task",
                 "status": "NEW",
                 "priority": 1,
-                "user_id": user_id,
+                "assigner_id": admin_id,
+                "doer_id": user_id,
+            },
+            {
+                "id": uuid.uuid4(),
+                "summary": "User -> User",
+                "description": "This is the first task",
+                "status": "NEW",
+                "priority": 1,
+                "assigner_id": user_id,
+                "doer_id": user_id,
             },
         ],
     )

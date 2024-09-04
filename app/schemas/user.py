@@ -3,6 +3,7 @@ from sqlalchemy.orm import relationship
 
 from app.schemas.base_entity import BaseEntity
 from app.database import Base
+from app.schemas.task import Task
 
 
 class User(BaseEntity, Base):
@@ -19,4 +20,8 @@ class User(BaseEntity, Base):
     company_id = Column(Uuid(as_uuid=True), ForeignKey("company.id"), nullable=False)
     company = relationship("Company", back_populates="users")
 
-    tasks = relationship("Task", back_populates="user")
+    # Tasks assigned by this user
+    assigned_tasks = relationship("Task", foreign_keys=[Task.assigner_id], back_populates="assigner")
+
+    # Tasks to be done by this user
+    tasks_to_do = relationship("Task", foreign_keys=[Task.doer_id], back_populates="doer")
