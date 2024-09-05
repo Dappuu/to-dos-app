@@ -266,15 +266,15 @@ All endpoints are prefixed with `/task`.
 ### Enum
 
 The Task table includes a "status" column that uses an enumeration to represent the current state of a task. The possible status values are defined as follows:
-  ```json
-  enum STATUS {
-      NEW = "N",
-      IN_PROGRESS = "IP",
-      PENDING = "P",
-      ABANDONED = "A",
-      DONE = "D"
-  }
-  ```
+```
+enum STATUS {
+    NEW = "N",
+    IN_PROGRESS = "IP",
+    PENDING = "P",
+    ABANDONED = "A",
+    DONE = "D"
+}
+```
 Status Descriptions:
 
 - NEW ("N"): The task has been created but work has not yet begun.
